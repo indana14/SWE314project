@@ -1,0 +1,110 @@
+{% extends "base_private.html" %}
+{% load static %}
+
+{% block title %}Seller Dashboard - Scrappy{% endblock %}
+
+{% block content %}
+<div class="seller-container">
+    <h1>Seller Dashboard</h1>
+
+    <div class="sell-flex">
+        <!-- Left: Product Form -->
+        <form method="post" enctype="multipart/form-data" class="sell-form">
+            {% csrf_token %}
+            
+            <h2 class="section-title">📦 List a New Product</h2>
+            
+            <label for="title">Product Title *</label>
+            <input type="text" name="title" id="title" placeholder="e.g., Mixed Plastic Bottles" required>
+
+            <label for="category">Category *</label>
+            <select name="category" id="category" required onchange="updatePricePreview()">
+                <option value="">Select category</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" data-price="{{ category.base_price }}">
+                        {{ category.name }} ({{ category.base_price }} per kg)
+                    </option>
+                {% endfor %}
+            </select>
+
+            <label for="weight">Weight (kg) *</label>
+            <input type="number" step="0.01" name="weight" id="weight" placeholder="Enter weight in kg" required oninput="updatePricePreview()">
+
+            <label for="image">Upload Product Image</label>
+            <input type="file" name="image" id="image">
+
+            <label for="description">Description *</label>
+            <textarea name="description" id="description" rows="3" placeholder="Describe the condition and details of your recyclables..." required></textarea>
+
+            <label for="available_date">Pickup Date & Time *</label>
+            <input type="datetime-local" name="available_date" id="available_date" required>
+
+            <button type="submit" class="btn-submit">List Product for Sale</button>
+        </form>
+
+        <!-- Right: Price Preview -->
+        <div class="price-preview">
+            <h2>💲 Price Preview</h2>
+            <p>Estimated Price</p>
+            <h1 id="estimated-price">$0.00</h1>
+            <p class="tip">💡 Clean and sort your recyclables to get better prices!</p>
+        </div>
+    </div>
+
+    <!-- Product List -->
+    <h2 class="section-title">📋 Your Products</h2>
+    <table class="product-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Weight (kg)</th>
+                <th>Price</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.category.name }}</td>
+                    <td>{{ product.weight }}</td>
+                    <td>${{ product.price }}</td>
+                    <td>
+                        {% if product.sold %}
+                            <span class="status sold">Sold</span>
+                        {% elif product.approved %}
+                            <span class="status approved">Approved</span>
+                        {% else %}
+                            <span class="status pending">Pending</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">You have not listed any products yet.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function updatePricePreview() {
+        const categorySelect = document.getElementById("category");
+        const weightInput = document.getElementById("weight");
+        const priceDisplay = document.getElementById("estimated-price");
+
+        const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+        const basePrice = selectedOption ? selectedOption.getAttribute("data-price") : 0;
+        const weight = parseFloat(weightInput.value);
+
+        if (basePrice && weight > 0) {
+            const estimatedPrice = (parseFloat(basePrice) * weight).toFixed(2);
+            priceDisplay.textContent = `$${estimatedPrice}`;
+        } else {
+            priceDisplay.textContent = "$0.00";
+        }
+    }
+</script>
+{% endblock %}

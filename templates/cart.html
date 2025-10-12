@@ -1,0 +1,47 @@
+{% extends "base_private.html" %}
+{% load static %}
+
+{% block title %}My Cart{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+
+<div class="cart-container">
+    <h2>Your Shopping Cart</h2>
+
+    {% if cart_items %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Image</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                </td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.product.price }}</td>
+                <td>${{ item.product.price|floatformat:2|add:item.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <h3>Total: ${{ total_price|floatformat:2 }}</h3>
+        <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+    </div>
+
+    {% else %}
+    <p class="empty-cart">Your cart is empty.</p>
+    {% endif %}
+</div>
+{% endblock %}

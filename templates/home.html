@@ -1,0 +1,58 @@
+{% extends "base_private.html" %}
+{% block title %}Home | Scrappy{% endblock %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'scrappy/style.css' %}">
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Welcome back, {{ user.username }}!</h1>
+    <p>Ready to make a positive impact? Join thousands of users who are transforming waste into wealth while building a sustainable future.</p>
+
+    <div class="cards">
+        <div class="card">
+            <div class="icon">📦</div>
+            <h3>Start Selling</h3>
+            <p>List your recyclable materials and connect with buyers in your area</p>
+            <a href="{% url 'seller' %}" class="btn-green">Sell Now</a>
+        </div>
+
+        <div class="card">
+            <div class="icon">🛍️</div>
+            <h3>Browse Marketplace</h3>
+            <p>Discover and purchase recyclable materials from verified sellers</p>
+            <a href="{% url 'buyer' %}" class="btn-blue">Browse Now</a>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="mission">
+    <h2>Our Mission</h2>
+    <p>At Scrappy, we believe that every piece of waste has value. We're building a circular economy where materials are reused, repurposed, and recycled, creating value for sellers while reducing environmental impact.</p>
+</section>
+
+<!-- How Scrappy Works -->
+<section class="how-it-works">
+    <h2>How Scrappy Works</h2>
+    <p>Our platform makes it simple for anyone to participate in the circular economy</p>
+
+    <div class="steps">
+        <div class="step">
+            <div class="circle green">1</div>
+            <h3>List Your Materials</h3>
+            <p>Upload photos and details of your recyclable materials</p>
+        </div>
+        <div class="step">
+            <div class="circle blue">2</div>
+            <h3>Connect with Buyers</h3>
+            <p>Get matched with verified buyers who need your materials</p>
+        </div>
+        <div class="step">
+            <div class="circle purple">3</div>
+            <h3>Complete the Exchange</h3>
+            <p>Arrange pickup, get paid, and give waste a second life</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

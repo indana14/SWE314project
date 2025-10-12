@@ -1,0 +1,60 @@
+{% extends "base_private.html" %}
+{% load static %}
+
+{% block title %}Buyer | Scrappy{% endblock %}
+
+{% block content %}
+<section class="browse">
+    <h1>Browse Recyclables</h1>
+    <p>Find and purchase recyclable materials from sellers in your area.</p>
+
+    <!-- Filters -->
+    <div class="filters">
+        <input type="text" placeholder="Search products..." class="search-box">
+
+        <select class="dropdown">
+            <option value="">All Categories</option>
+            <option value="plastic">Plastic</option>
+            <option value="glass">Glass</option>
+            <option value="metal">Metal</option>
+            <option value="electronics">Electronics</option>
+        </select>
+
+        <select class="dropdown">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="low_price">Lowest Price</option>
+            <option value="high_price">Highest Price</option>
+        </select>
+
+        <span class="product-count">{{ products.count }} products found</span>
+    </div>
+
+    <!-- Product Grid -->
+    {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-card">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-img">
+                {% else %}
+                    <img src="{% static 'scrappy/no-image.png' %}" alt="No Image" class="product-img">
+                {% endif %}
+                <h3>{{ product.title }}</h3>
+                <p class="category">{{ product.get_category_display }}</p>
+                <p class="desc">{{ product.description|truncatewords:15 }}</p>
+                <p class="price"> {{ product.price }} BDT</p>
+                <a href="{% url 'add_to_cart' product.id %}" class="btn btn-green">Add to Cart</a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <!-- Empty state -->
+        <div class="no-products">
+            <div class="icon">🔍</div>
+            <h2>No products found</h2>
+            <p>No products are currently listed. Check back later!</p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

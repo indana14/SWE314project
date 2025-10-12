@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+
+<div class="checkout-container">
+    <h1>Checkout</h1>
+
+    {% if cart_items %}
+    <div class="checkout-grid">
+        <!-- Left: Order Summary -->
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <ul>
+                {% for item in cart_items %}
+                <li>
+                    <div class="product-info">
+                        <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}">
+                        <span>{{ item.product.title }} × {{ item.quantity }}</span>
+                    </div>
+                    <span class="price">${{ item.subtotal|floatformat:2 }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <div class="price-details">
+                <p>Subtotal: <span>${{ subtotal|floatformat:2 }}</span></p>
+                <p>Shipping: <span>${{ shipping|floatformat:2 }}</span></p>
+                <p>Tax: <span>${{ tax|floatformat:2 }}</span></p>
+                <hr>
+                <h3>Total: <span>${{ total|floatformat:2 }}</span></h3>
+            </div>
+        </div>
+
+        <!-- Right: Payment & Address -->
+        <div class="payment-form">
+            <h2>Shipping Information</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <label>Full Name</label>
+                <input type="text" name="name" required>
+
+                <label>Address</label>
+                <textarea name="address" rows="3" required></textarea>
+
+                <label>Payment Method</label>
+                <select name="payment" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="COD">Cash on Delivery</option>
+                    <option value="Bkash">bKash</option>
+                    <opti

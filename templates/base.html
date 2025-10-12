@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Scrappy{% endblock %}</title>
+    <style>
+        :root {
+            --primary-green: #2E8B57;
+            --light-green: #3CB371;
+            --dark-green: #1D5D38;
+            --white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --light-gray: #E9ECEF;
+            --text-dark: #212529;
+            --text-muted: #6C757D;
+        }
+
+        
+    </style>
+    <link rel="stylesheet" href="{% static 'scrappy/style.css' %}">
+</head>
+<body>
+    <!-- Navbar (common for all pages) -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="logo-circle">S</span>
+            <span class="logo-text">Scrappy</span>
+        </div>
+        <nav class="nav-links">
+            <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
+        </nav>
+    </header>
+
+    <!-- Page content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 Scrappy - Making recycling profitable and accessible for everyone.</p>
+    </footer>
+</body>
+</html>
