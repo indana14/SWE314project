@@ -40,10 +40,14 @@
                 {% else %}
                     <img src="{% static 'scrappy/no-image.png' %}" alt="No Image" class="product-img">
                 {% endif %}
-                <h3>{{ product.title }}</h3>
-                <p class="category">{{ product.get_category_display }}</p>
-                <p class="desc">{{ product.description|truncatewords:15 }}</p>
-                <p class="price"> {{ product.price }} BDT</p>
+
+                <div class="card-content">
+                    <h3>{{ product.title }}</h3>
+                    <p class="category">{{ product.get_category_display }}</p>
+                    <p class="desc">{{ product.description|truncatewords:15 }}</p>
+                    <p class="price">{{ product.price }} BDT</p>
+                </div>
+
                 <a href="{% url 'add_to_cart' product.id %}" class="btn btn-green">Add to Cart</a>
             </div>
             {% endfor %}

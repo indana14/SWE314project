@@ -51,4 +51,17 @@
                     <option value="">Select Payment Method</option>
                     <option value="COD">Cash on Delivery</option>
                     <option value="Bkash">bKash</option>
-                    <opti
+                    <option value="Nagad">Nagad</option>
+                </select>
+
+                <button type="submit" class="btn-confirm">Confirm Order</button>
+            </form>
+        </div>
+    </div>
+
+    {% else %}
+        <p>Your cart is empty!</p>
+    {% endif %}
+</div>
+
+{% endblock %}
