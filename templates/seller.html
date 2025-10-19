@@ -12,7 +12,7 @@
         <form method="post" enctype="multipart/form-data" class="sell-form">
             {% csrf_token %}
             
-            <h2 class="section-title">📦 List a New Product</h2>
+            <h2 class="section-title">List a New Product</h2>
             
             <label for="title">Product Title *</label>
             <input type="text" name="title" id="title" placeholder="e.g., Mixed Plastic Bottles" required>
@@ -36,9 +36,6 @@
             <label for="description">Description *</label>
             <textarea name="description" id="description" rows="3" placeholder="Describe the condition and details of your recyclables..." required></textarea>
 
-            <label for="available_date">Pickup Date & Time *</label>
-            <input type="datetime-local" name="available_date" id="available_date" required>
-
             <button type="submit" class="btn-submit">List Product for Sale</button>
         </form>
 
@@ -47,12 +44,12 @@
             <h2>💲 Price Preview</h2>
             <p>Estimated Price</p>
             <h1 id="estimated-price">$0.00</h1>
-            <p class="tip">💡 Clean and sort your recyclables to get better prices!</p>
+            <p class="tip">Clean and sort your recyclables to get better prices!</p>
         </div>
     </div>
 
     <!-- Product List -->
-    <h2 class="section-title">📋 Your Products</h2>
+    <h2 class="section-title">Your Products</h2>
     <table class="product-table">
         <thead>
             <tr>
